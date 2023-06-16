@@ -19,6 +19,9 @@ export default function FilesList() {
   function getData() {
     const res = fetch(`${url}/filings/my-filings/${user?._id}`, {
       cache: "no-store",
+      headers:{
+        organization: user?.organizations[0]?._id
+      }
     })
       .then((res) => {
         if (!res.ok) {

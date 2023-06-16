@@ -153,6 +153,15 @@ export default async function File({ params }) {
                 );
               })}
             </div>
+
+            <div>
+              <div className="text-gray-500 text-xxs">
+                Company
+              </div>
+              <div className="text-gray-800 text-sm">
+                {fData?.organization?.name}
+              </div>
+            </div>
           </div>
 
           <CommentSection parentObject={fData} collaborator={user} />

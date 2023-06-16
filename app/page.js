@@ -57,9 +57,8 @@ export default function Home() {
           // setLoggingIn(false);
           return res.json();
         } else {
-          // setLoggingIn(false);
-          // throw new Error('Failed to Fetch')
-          // openNotification('Login failed','It is a connection issue. Please try again later')
+          setLoggingIn(false);
+          throw new Error('Failed to Fetch')
         }
       })
       .then((res) => {
@@ -67,8 +66,9 @@ export default function Home() {
           localStorage.setItem("user", JSON.stringify(res));
           router.push("/documents/files");
           // setLoggingIn(false);
+        } else {
+
         }
-        e;
       })
       .catch((err) => {
         openNotification("Login failed", "Please check your credentials", 'error');

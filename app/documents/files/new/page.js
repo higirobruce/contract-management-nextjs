@@ -3,6 +3,7 @@ import { getAgreementTypes } from "../../../components/agreementTypesList";
 import Button from "../../../components/button";
 import Datepicker from "../../../components/datepicker";
 import { getExecutionStatuses } from "../../../components/executionStatuses";
+import { getCompanies } from "../../../components/companiesList";
 import { getExpiryActions } from "../../../components/expiryActionsList";
 import ListBox from "../../../components/listBox";
 import { getPartyTypes } from "../../../components/partyTypesList";
@@ -47,11 +48,18 @@ export default function NewFile() {
   let [file, setFile] = useState(null);
   let [saving, setSaving] = useState(false);
   let [user, setUser] = useState("");
-  let [collaborators, setCollaborators] = useState([])
+  let [collaborators, setCollaborators] = useState([]);
+  let [organization, setOrganization] = useState(null);
+  let [companies, setCompanies] = useState([]);
+  let [fileCompany, setFileCompany] = useState({
+    name: "Select",
+    value: "",
+  })
+
 
   useEffect(() => {
     setSaving(false);
-    setFile(null)
+    setFile(null);
     setUser(JSON.parse(localStorage.getItem("user")));
     console.log(JSON.parse(localStorage.getItem("user")));
     getPartyTypes().then((res) => {
@@ -64,6 +72,18 @@ export default function NewFile() {
       });
 
       setPartyTypeOptions(options);
+    });
+
+    getCompanies().then((res) => {
+      let options = res?.map((comp) => {
+        return {
+          name: comp?.name,
+          value: comp?._id,
+          key: comp?._id,
+        };
+      });
+
+      setCompanies(options)
     });
 
     getAgreementTypes().then((res) => {
@@ -91,14 +111,19 @@ export default function NewFile() {
     });
 
     getCollaborators().then((res) => {
-      let collaborators = res?.users
-      let options = collaborators?.map((collab) => {
-        return  {
-          label: collab.email,
-          value: collab._id,
-          key: collab._id,
-        };
-      }).filter(collab=>collab.key !== JSON.parse(localStorage.getItem("user"))?._id)
+      let collaborators = res?.users;
+      let options = collaborators
+        ?.map((collab) => {
+          return {
+            label: collab.email,
+            value: collab._id,
+            key: collab._id,
+          };
+        })
+        .filter(
+          (collab) =>
+            collab.key !== JSON.parse(localStorage.getItem("user"))?._id
+        );
 
       setCollaboratorsOptions(options);
     });
@@ -165,6 +190,7 @@ export default function NewFile() {
         docId: filePath,
         owner: user?._id,
         collaborators: [...collaborators, user?._id],
+        organization: organization || user?.organizations[0]?._id,
       }),
     })
       .then((res) => res.json())
@@ -222,12 +248,12 @@ export default function NewFile() {
             </div>
 
             <div className="z-10">
-            <ListBox
-              label="Status of execution"
-              selected={statusOfExecution}
-              setSelected={setStatusOfExecution}
-              options={executionStatusesOptions}
-            />
+              <ListBox
+                label="Status of execution"
+                selected={statusOfExecution}
+                setSelected={setStatusOfExecution}
+                options={executionStatusesOptions}
+              />
             </div>
 
             <TextField
@@ -247,10 +273,24 @@ export default function NewFile() {
 
             <Datepicker setStartDate={setStartDate} setEndDate={setEndDate} />
 
-            <div className="z-0"><MultipleSelect options={collaboratorsOptions} setSelected={setCollaborators} /></div>
+            <div className="z-0">
+              <MultipleSelect
+                options={collaboratorsOptions}
+                setSelected={setCollaborators}
+              />
+            </div>
           </div>
           <div className="grid md:grid-cols-5 sm:grid-cols-2 gap-10 ">
             <UploadFile setFile={setFile} />
+
+            <div className="z-10">
+              <ListBox
+                label="Company"
+                selected={fileCompany}
+                setSelected={setFileCompany}
+                options={companies}
+              />
+            </div>
           </div>
           <Button onClick={submit} isDisabled={saving || !file}>
             Save file
