@@ -240,7 +240,7 @@ export default function NewFile() {
 
             <div className="z-10">
               <ListBox
-                label="Agreement Type"
+                label="File type"
                 selected={agreementType}
                 setSelected={setAgreementType}
                 options={agreementTypeOptions}
@@ -273,12 +273,12 @@ export default function NewFile() {
 
             <Datepicker setStartDate={setStartDate} setEndDate={setEndDate} />
 
-            <div className="z-0">
+            {/* <div className="z-0">
               <MultipleSelect
                 options={collaboratorsOptions}
                 setSelected={setCollaborators}
               />
-            </div>
+            </div> */}
           </div>
           <div className="grid md:grid-cols-5 sm:grid-cols-2 gap-10 ">
             <UploadFile setFile={setFile} />

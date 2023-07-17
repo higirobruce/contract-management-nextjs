@@ -60,17 +60,17 @@ export default function Navbar({ user }) {
             Files
           </Link>
           <Link
-            href="/documents/contracts"
+            href="/documents/legal-templates"
             className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
           >
-            Contracts
+            Legal templates
           </Link>
 
           <Link
-            href="/documents/boardResolutions"
+            href="/documents/matters-arising"
             className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
           >
-            Board resolutions
+            Matters arising
           </Link>
         </div>
         <div className="flex flex-row space-x-5 text-sm">

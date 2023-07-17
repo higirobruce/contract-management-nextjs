@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Contracts() {
-  return <h1>Contracts</h1>;
+  return <h1>Legal Templates</h1>;
 }
