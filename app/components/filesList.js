@@ -28,25 +28,23 @@ export default function FilesList() {
 
   function download() {
     setDownloadingData(true);
-    setTimeout(() => {
-      let _fileData = transformData(fileData);
-      const fileType =
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
-      const fileExtension = ".xlsx";
-      const exportToCSV = (apiData, fileName) => {
-        const ws = XLSX.utils.json_to_sheet(apiData);
-        const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
-        const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-        const data = new Blob([excelBuffer], { type: fileType });
-        FileSaver.saveAs(data, fileName + fileExtension);
-      };
-      exportToCSV(
-        _fileData,
-        `Files report ${moment().format("DD-MMM-YYYY HH-mm-ss")}`
-      );
+    let _fileData = transformData(fileData);
+    const fileType =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    const fileExtension = ".xlsx";
+    const exportToCSV = (apiData, fileName) => {
+      const ws = XLSX.utils.json_to_sheet(apiData);
+      const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+      const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+      const data = new Blob([excelBuffer], { type: fileType });
+      FileSaver.saveAs(data, fileName + fileExtension);
+    };
+    exportToCSV(
+      _fileData,
+      `Files report ${moment().format("DD-MMM-YYYY HH-mm-ss")}`
+    );
 
-      setDownloadingData(false);
-    }, 5000);
+    setDownloadingData(false);
   }
 
   function transformData() {
