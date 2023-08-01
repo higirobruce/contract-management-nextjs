@@ -75,12 +75,18 @@ export default function FilesList() {
   }
 
   function getData() {
-    fetch(`${url}/filings/my-filings/${user?._id}`, {
-      cache: "no-store",
-      headers: {
-        organization: user?.organizations[0]?._id,
-      },
-    })
+    fetch(
+      user?.permissions?.canViewFiles
+        ? `${url}/filings`
+        : `${url}/filings/my-filings/${user?._id}`,
+      {
+        cache: "no-store",
+        headers: {
+          organization: user?.organizations[0]?._id,
+          viewAll: user?.permissions?.canViewFiles,
+        },
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           // This will activate the closest `error.js` Error Boundary
