@@ -1,13 +1,17 @@
+'use client'
 import { FileFilled } from "@ant-design/icons";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import LogoutLink from "./logoutLink";
 
+
 export default function Navbar({ user }) {
+  let [viewMenu, setViewMenu] = useState(true);
   return (
     <nav className="flex items-center flex-wrap bg-blue-500 p-6 fixed top-0 left-0 right-0 z-10">
       <Link
         href="/"
+        onClick={()=>setViewMenu(!viewMenu)}
         className="flex items-center flex-shrink-0 text-white mr-6 cursor-pointer"
       >
         {/* <svg
@@ -40,7 +44,10 @@ export default function Navbar({ user }) {
         </span> */}
       </Link>
       <div className="block lg:hidden">
-        <button className="flex items-center px-3 py-2 border rounded text-blue-200 border-blue-400 hover:text-white hover:border-white">
+        <button
+          onClick={()=>setViewMenu(!viewMenu)}
+          className="flex items-center px-3 py-2 border rounded text-blue-200 border-blue-400 hover:text-white hover:border-white"
+        >
           <svg
             className="fill-current h-3 w-3"
             viewBox="0 0 20 20"
@@ -51,52 +58,68 @@ export default function Navbar({ user }) {
           </svg>
         </button>
       </div>
-      <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-        <div className="text-sm lg:flex-grow">
-          <Link
-            href="/documents/files"
-            className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
-          >
-            Files
-          </Link>
-          <Link
-            href="/documents/legal-templates"
-            className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
-          >
-            Legal templates
-          </Link>
 
-          <Link
-            href="/documents/matters-arising"
-            className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
-          >
-            Matters arising
-          </Link>
-        </div>
-        <div className="flex flex-row space-x-5 text-sm">
-          {user && (
-            <div className="flex flex-row space-x-5 ">
-              <Link
-                href="/profile"
-                className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
-              >
-                Hi, {user?.firstName}
-              </Link>
-
-              <LogoutLink />
-            </div>
-          )}
-
-          {!user && (
+      {viewMenu && (
+        <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+          <div className="text-sm lg:flex-grow">
             <Link
-              href="/"
+              href="/documents/files"
+              onClick={()=>setViewMenu(!viewMenu)}
+              className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
+            >
+              Files
+            </Link>
+            <Link
+              href="/documents/legal-templates"
+              onClick={()=>setViewMenu(!viewMenu)}
+              className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
+            >
+              Legal templates
+            </Link>
+
+            <Link
+              href="/documents/matters-arising"
+              onClick={()=>setViewMenu(!viewMenu)}
+              className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
+            >
+              Matters arising
+            </Link>
+
+            {user && user?.permissions?.canViewUsers && <Link
+              href="/users"
+              onClick={()=>setViewMenu(!viewMenu)}
               className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
             >
-              Login
-            </Link>
-          )}
+              Users
+            </Link>}
+          </div>
+          <div className="flex flex-row space-x-5 text-sm">
+            {user && (
+              <div className="flex flex-row space-x-5 ">
+                <Link
+                  href="/profile"
+                  onClick={()=>setViewMenu(!viewMenu)}
+                  className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
+                >
+                  Hi, {user?.firstName}
+                </Link>
+
+                <LogoutLink />
+              </div>
+            )}
+
+            {!user && (
+              <Link
+                href="/"
+                onClick={()=>setViewMenu(!viewMenu)}
+                className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
+              >
+                Login
+              </Link>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 }
