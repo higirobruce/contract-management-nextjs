@@ -54,8 +54,7 @@ export default function NewFile() {
   let [fileCompany, setFileCompany] = useState({
     name: "Select",
     value: "",
-  })
-
+  });
 
   useEffect(() => {
     setSaving(false);
@@ -83,7 +82,7 @@ export default function NewFile() {
         };
       });
 
-      setCompanies(options)
+      setCompanies(options);
     });
 
     getAgreementTypes().then((res) => {
@@ -283,14 +282,17 @@ export default function NewFile() {
           <div className="grid md:grid-cols-5 sm:grid-cols-2 gap-10 ">
             <UploadFile setFile={setFile} />
 
-            <div className="z-10">
-              <ListBox
-                label="Company"
-                selected={fileCompany}
-                setSelected={setFileCompany}
-                options={companies}
-              />
-            </div>
+            {user?.organizations[0]?.number == 1000 &&
+              user?.permissions?.canViewFiles && (
+                <div className="z-10">
+                  <ListBox
+                    label="Company"
+                    selected={fileCompany}
+                    setSelected={setFileCompany}
+                    options={companies}
+                  />
+                </div>
+              )}
           </div>
           <Button onClick={submit} isDisabled={saving || !file}>
             Save file
