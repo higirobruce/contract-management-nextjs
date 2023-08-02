@@ -80,6 +80,7 @@ export default function UsersList() {
       cache: "no-store",
       headers: {
         organization: user?.organizations[0]?._id,
+        viewall: user?.permissions?.canViewUsers,
       },
     })
       .then((res) => {
@@ -91,7 +92,11 @@ export default function UsersList() {
         return res.json();
       })
       .then((res) => {
-        setUsersData(res?.users);
+        let _users = res?.users?.map(user=>{
+          user.organization = user?.organizations[0]?.number + ' - ' + user?.organizations[0]?.name;
+          return user;
+        })
+        setUsersData(_users);
       });
   }
 

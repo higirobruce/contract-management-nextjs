@@ -64,14 +64,14 @@ export default function Navbar({ user }) {
           <div className="text-sm lg:flex-grow">
             <Link
               href="/documents/files"
-              onClick={()=>setViewMenu(!viewMenu)}
+              // onClick={()=>setViewMenu(!viewMenu)}
               className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
             >
               Files
             </Link>
             <Link
               href="/documents/legal-templates"
-              onClick={()=>setViewMenu(!viewMenu)}
+              // onClick={()=>setViewMenu(!viewMenu)}
               className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
             >
               Legal templates
@@ -79,7 +79,7 @@ export default function Navbar({ user }) {
 
             <Link
               href="/documents/matters-arising"
-              onClick={()=>setViewMenu(!viewMenu)}
+              // onClick={()=>setViewMenu(!viewMenu)}
               className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
             >
               Matters arising
@@ -87,7 +87,7 @@ export default function Navbar({ user }) {
 
             {user && user?.permissions?.canViewUsers && <Link
               href="/users"
-              onClick={()=>setViewMenu(!viewMenu)}
+              // onClick={()=>setViewMenu(!viewMenu)}
               className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
             >
               Users
@@ -98,7 +98,7 @@ export default function Navbar({ user }) {
               <div className="flex flex-row space-x-5 ">
                 <Link
                   href="/profile"
-                  onClick={()=>setViewMenu(!viewMenu)}
+                  // onClick={()=>setViewMenu(!viewMenu)}
                   className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
                 >
                   Hi, {user?.firstName}
@@ -111,7 +111,7 @@ export default function Navbar({ user }) {
             {!user && (
               <Link
                 href="/"
-                onClick={()=>setViewMenu(!viewMenu)}
+                // onClick={()=>setViewMenu(!viewMenu)}
                 className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white"
               >
                 Login

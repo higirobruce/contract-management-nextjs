@@ -141,16 +141,17 @@ export default function UsersTable({ data }) {
     },
     {
       title: "Organization",
-      // dataIndex: "organization",
+      dataIndex: "organization",
       render: (_, record) => (
         <div
           scope="row"
           className=" font-light text-xs text-blue-500 whitespace-nowrap hover:underline "
         >
-          {record.organizations[0]?.number} - {record.organizations[0]?.name}
+          {record.organization}
         </div>
       ),
-      // ...getColumnSearchProps("description"),
+      sorter: (a, b) => a?.organization?.localeCompare(b?.organization),
+      ...getColumnSearchProps("organization"),
     },
   ];
   return (
