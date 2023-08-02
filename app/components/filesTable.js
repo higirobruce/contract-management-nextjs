@@ -1,5 +1,5 @@
 "use client";
-import { Input, Space, Table } from "antd";
+import { Input, Space, Table, Typography } from "antd";
 import React, { useRef, useState } from "react";
 import moment from "moment-timezone";
 import Link from "next/link";
@@ -143,6 +143,19 @@ export default function FilesTable({ data }) {
       title: "DESCRIPTION",
       dataIndex: "description",
       ...getColumnSearchProps("description"),
+    },
+    {
+      title: "ORGANIZATION",
+      dataIndex: "organization",
+      render: (_, record) => (
+        <div
+          scope="row"
+          className=" font-light text-xs text-blue-500 whitespace-nowrap"
+        >
+          <Typography.Text> {record.organization?.name}</Typography.Text>
+        </div>
+      ),
+      // ...getColumnSearchProps("description"),
     },
     {
       title: "URGENCY",
