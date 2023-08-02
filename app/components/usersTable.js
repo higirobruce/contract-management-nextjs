@@ -140,6 +140,12 @@ export default function UsersTable({ data }) {
       ...getColumnSearchProps("lastName"),
     },
     {
+      title: "Email",
+      dataIndex: "email",
+      sorter: (a, b) => a?.email?.localeCompare(b?.email),
+      ...getColumnSearchProps("email"),
+    },
+    {
       title: "Organization",
       dataIndex: "organization",
       render: (_, record) => (

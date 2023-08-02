@@ -60,7 +60,8 @@ export default function NewFile() {
     setSaving(false);
     setFile(null);
     setUser(JSON.parse(localStorage.getItem("user")));
-    console.log(JSON.parse(localStorage.getItem("user")));
+    console.log("Ussserrrr", localStorage.getItem("user"));
+    console.log("Ussserrrr Parsed", JSON.parse(localStorage.getItem("user")));
     getPartyTypes().then((res) => {
       let options = res?.map((pa) => {
         return {
@@ -282,7 +283,8 @@ export default function NewFile() {
           <div className="grid md:grid-cols-5 sm:grid-cols-2 gap-10 ">
             <UploadFile setFile={setFile} />
 
-            {user?.organizations[0]?.number == 1000 &&
+            {user &&
+              user?.organizations[0]?.number === 1000 &&
               user?.permissions?.canViewFiles && (
                 <div className="z-10">
                   <ListBox
